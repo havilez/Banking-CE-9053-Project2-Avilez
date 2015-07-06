@@ -15,7 +15,7 @@ beforeEach(function () {
 
 // FIX-ME: replace all new BankAccount()  with  factory
 
-xdescribe("BankAccount", function(){
+describe("BankAccount", function(){
 
     it("exists", function(){
         expect(BankAccount).toBeDefined();
@@ -87,7 +87,7 @@ xdescribe("Bank Account behavior when creating an account with invalid propertie
     });
 
 });
-xdescribe("When depositing into Bank Account", function () {
+describe("When depositing into Bank Account", function () {
     var account = new BankAccount({ accountId: 'abc'});
 
     it("should have a balance equal to what was initially deposited ",function(){
