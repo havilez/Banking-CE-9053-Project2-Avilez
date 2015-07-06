@@ -144,11 +144,11 @@ describe("When withdrawing from Bank Account ", function () {
         }).toThrow();
 
     });
-    it("should throw an exception when withdrawal would result in a negative balance", function () {
+    it("should throw an exception when withdrawal would result in a non-Positive balance", function () {
         expect(function () {
             account._locked = false;
             account._balance = 1;
-            account.withdraw(1000);
+            account.withdraw(1);
         }).toThrow();
 
     });

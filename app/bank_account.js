@@ -36,6 +36,12 @@ BankAccount.prototype.locked = function() {
 };
 
 
+BankAccount.prototype.projectedWithdrawalBalance = function(amount)
+{
+    var projecedBalance  = this._balance - amount;
+    return  (projecedBalance < 1000) ? projecedBalance - WITHDRAWAL_PENALTY : projecedBalance;
+
+};
 
 BankAccount.prototype.deposit = function( amount )
 {
@@ -53,15 +59,18 @@ BankAccount.prototype.withdraw = function( amount )
 {
     if (this._locked) throw "cannot withdraw from a locked account";
 
+
     if (typeof amount != 'number') throw "withdrawal amount must be number";
 
     if ( amount < 0 ) throw "withdrawal amount cannot be zero or negative";
 
-    if ((this._balance - amount) < 0 ) throw "withdrawal cannot result in a negative balance";
+    var projected_balance = this.projectedWithdrawalBalance(amount)
+
+     if ( projected_balance < 0 ) throw "withdrawal cannot result in a negative balance";
 
     this._balance -= amount;
 
-    this._balance = (this._balance < 1000) ? this._balance - WITHDRAWAL_PENALTY : this._balance;
+    this._balance = projected_balance;
 
 
     console.log(this._balance);
