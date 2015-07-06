@@ -39,7 +39,7 @@ describe("BankAccount", function(){
 
 });
 
-describe("Bank Account behavior when properties not provided", function () {
+describe("Bank Account defaulting behavior when properties not provided", function () {
     var bankAccount = new BankAccount({accountId: 'abc'});
 
     it("balance should default to zero, when not provided", function () {
@@ -48,6 +48,14 @@ describe("Bank Account behavior when properties not provided", function () {
     it("locked flag should default to false, when not provided",function(){
         expect(bankAccount.locked()).toEqual(false);
     });
+
+
+
+});
+
+describe("Bank Account behavior when invalid properties provided", function () {
+    var bankAccount;
+
     it("should throw an exception if account id is not provided", function () {
         expect(function () {
             bankAccount =   new BankAccount({});
@@ -78,7 +86,4 @@ describe("Bank Account behavior when properties not provided", function () {
         }).toThrow();
     });
 
-
 });
-
-
