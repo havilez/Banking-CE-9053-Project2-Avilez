@@ -15,7 +15,7 @@ beforeEach(function () {
 
 // FIX-ME: replace all new BankAccount()  with  factory
 
-describe("BankAccount", function(){
+xdescribe("BankAccount", function(){
 
     it("exists", function(){
         expect(BankAccount).toBeDefined();
@@ -39,7 +39,7 @@ describe("BankAccount", function(){
 
 });
 
-describe("Bank Account defaulting behavior when properties not provided", function () {
+xdescribe("Bank Account defaulting behavior when properties not provided", function () {
     var bankAccount = new BankAccount({accountId: 'abc'});
 
     it("balance should default to zero, when not provided", function () {
@@ -53,7 +53,7 @@ describe("Bank Account defaulting behavior when properties not provided", functi
 
 });
 
-describe("Bank Account behavior when invalid properties provided", function () {
+xdescribe("Bank Account behavior when creating an account with invalid properties", function () {
     var bankAccount;
 
     it("should throw an exception if account id is not provided", function () {
@@ -85,5 +85,74 @@ describe("Bank Account behavior when invalid properties provided", function () {
             });
         }).toThrow();
     });
+
+});
+xdescribe("When depositing into Bank Account", function () {
+    var account = new BankAccount({ accountId: 'abc'});
+
+    it("should have a balance equal to what was initially deposited ",function(){
+        account.deposit(1000);
+        expect(account.balance()).toEqual(1000);
+    });
+    it("should throw an exception when value deposited is not a number", function () {
+        expect(function () {
+            account.deposit('z');
+        }).toThrow();
+    });
+    it("should throw an exception when an amount of zero is deposited", function () {
+        expect(function () {
+            account.deposit(0);
+        }).toThrow();
+    });
+    it("should throw an excepton when depositing into a locked account", function () {
+        expect(function () {
+            account._locked = true;
+            account.deposit(1000);
+        }).toThrow();
+    });
+
+});
+
+describe("When withdrawing from Bank Account ", function () {
+    var account = new BankAccount({ accountId: 'abc', balance: 500});
+
+    it("should throw an exception when value withdrawn in not a number", function () {
+        expect(function () {
+            account.withdraw('z');
+        }).toThrow();
+    });
+    it("should throw an exception when value withdrawn is zero or less", function () {
+        expect(function () {
+            account.withdraw(-1);
+        }).toThrow();
+    });
+    it("should result in $1 charge when balance less than $1000", function () {
+        var initialBalance = account.balance();
+        account.withdraw(10);
+        expect(account.balance()).toEqual(initialBalance-10-1);
+    });
+    it("should be no penalty charge when withdrawing an amount and balance stays above $1000", function () {
+        account._balance = 5000;
+        var initialBalance = account.balance();
+        account.withdraw(100);
+        expect(account.balance()).toEqual(initialBalance-100);
+    });
+    it("should throw an exception when attempting to withdraw from a locked account", function () {
+        expect(function () {
+            account._locked = true;
+            account.withdraw(1000);
+        }).toThrow();
+
+    });
+    it("should throw an exception when withdrawal would result in a negative balance", function () {
+        expect(function () {
+            account._locked = false;
+            account._balance = 1;
+            account.withdraw(1000);
+        }).toThrow();
+
+    });
+
+
 
 });

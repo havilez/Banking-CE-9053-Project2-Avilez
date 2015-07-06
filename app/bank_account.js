@@ -1,4 +1,4 @@
-
+var WITHDRAWAL_PENALTY = 1;
 
 var _ = require('lodash');
 
@@ -33,6 +33,38 @@ BankAccount.prototype.balance = function() {
 
 BankAccount.prototype.locked = function() {
     return this._locked;
+};
+
+
+
+BankAccount.prototype.deposit = function( amount )
+{
+    if (this._locked) throw "cannot deposit into a locked account";
+
+    if (typeof amount != 'number') throw "deposit amount must be number";
+
+    if (amount <= 0 ) throw "deposit amount must be greater than zero";
+
+    this._balance+= amount;
+    console.log(this._balance);
+};
+
+BankAccount.prototype.withdraw = function( amount )
+{
+    if (this._locked) throw "cannot withdraw from a locked account";
+
+    if (typeof amount != 'number') throw "withdrawal amount must be number";
+
+    if ( amount < 0 ) throw "withdrawal amount cannot be zero or negative";
+
+    if ((this._balance - amount) < 0 ) throw "withdrawal cannot result in a negative balance";
+
+    this._balance -= amount;
+
+    this._balance = (this._balance < 1000) ? this._balance - WITHDRAWAL_PENALTY : this._balance;
+
+
+    console.log(this._balance);
 };
 
 
