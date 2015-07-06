@@ -1,0 +1,22 @@
+{
+  "name": "bank-account",
+  "version": "0.0.1",
+  "description": "simple banking app",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine-node spec/ --color --watch **/*.js --autotest --captureExceptions --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ericpkatz/Banking-CE-9053-Project.git"
+  },
+  "author": "Eric P. Katz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ericpkatz/Banking-CE-9053-Project/issues"
+  },
+  "homepage": "https://github.com/ericpkatz/Banking-CE-9053-Project",
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  }
+}
