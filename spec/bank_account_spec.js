@@ -147,7 +147,7 @@ describe("When withdrawing from Bank Account ", function () {
         }).toThrow();
 
     });
-    it("should throw an exception when withdrawal would result in a non-Positive balance", function () {
+    it("should throw an exception when withdrawal would result in a negative balance", function () {
         expect(function () {
             account._locked = false;
             account._balance = 1;
