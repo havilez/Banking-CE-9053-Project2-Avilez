@@ -71,15 +71,7 @@ BankAccount.prototype.withdraw = function( amount )
     console.log(this._balance);
 };
 
-/**
-var BankAccountFactory = {
-    create: function(parms) {
-        var defaults = { balance: 1000, locked: false};
-        var values = _.assign({},defaults, parms);
-        return new BankAccount(values);
-    }
-};
-**/
+
 
 var BankAccountFactory  =  function() {};
 
