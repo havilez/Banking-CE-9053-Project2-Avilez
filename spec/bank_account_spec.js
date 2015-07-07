@@ -39,7 +39,7 @@ describe("BankAccount", function(){
 
 });
 
-xdescribe("Bank Account defaulting behavior when properties not provided", function () {
+describe("Bank Account defaulting behavior when properties not provided", function () {
     var bankAccount = new BankAccount({accountId: 'abc'});
 
     it("balance should default to zero, when not provided", function () {
@@ -53,7 +53,7 @@ xdescribe("Bank Account defaulting behavior when properties not provided", funct
 
 });
 
-xdescribe("Bank Account behavior when creating an account with invalid properties", function () {
+describe("Bank Account behavior when creating an account with invalid properties", function () {
     var bankAccount;
 
     it("should throw an exception if account id is not provided", function () {
