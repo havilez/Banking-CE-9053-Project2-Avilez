@@ -88,6 +88,8 @@ describe("Bank Account behavior when creating an account with invalid properties
     });
 
 });
+
+
 describe("When depositing into Bank Account", function () {
     var account = BankAccountFactory.create({ accountId: 'abc'});
 
