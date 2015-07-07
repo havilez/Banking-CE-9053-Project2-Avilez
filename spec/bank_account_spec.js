@@ -1,5 +1,6 @@
 
 var BankAccount = require("../app/bank_account");
+var BankAccountFactory = require("../app/bank_account").BankAccountFactory;
 
 beforeEach(function () {
     this.addMatchers({
@@ -13,7 +14,7 @@ beforeEach(function () {
     });
 });
 
-// FIX-ME: replace all new BankAccount()  with  factory
+
 
 describe("BankAccount", function(){
 
@@ -21,7 +22,7 @@ describe("BankAccount", function(){
         expect(BankAccount).toBeDefined();
     });
 
-    var bankAccount  = new BankAccount({accountId: 'abc', balance: 1000, locked: false});
+    var bankAccount  = BankAccountFactory.create({accountId: 'abc', balance: 1000, locked: false});
 
     it("should contain a accountId", function () {
         expect(bankAccount.accountId()).toEqual('abc');
@@ -40,7 +41,7 @@ describe("BankAccount", function(){
 });
 
 describe("Bank Account defaulting behavior when properties not provided", function () {
-    var bankAccount = new BankAccount({accountId: 'abc'});
+    var bankAccount = BankAccountFactory.create({accountId: 'abc'});
 
     it("balance should default to zero, when not provided", function () {
         expect(bankAccount.balance()).toBeNonNegative();
@@ -58,12 +59,12 @@ describe("Bank Account behavior when creating an account with invalid properties
 
     it("should throw an exception if account id is not provided", function () {
         expect(function () {
-            bankAccount =   new BankAccount({});
+            bankAccount =   BankAccountFactory.create({});
         }).toThrow();
     });
     it("should throw an exception if balance provided is negative", function () {
         expect(function() {
-            bankAccount = new BankAccount({
+            bankAccount = BankAccountFactory.create({
                 accountId: 'abc',
                 balance: -1
             });
@@ -71,7 +72,7 @@ describe("Bank Account behavior when creating an account with invalid properties
     });
     it("should throw an exception if balance provided is not a number", function () {
         expect(function() {
-            bankAccount = new BankAccount({
+            bankAccount = BankAccountFactory.create({
                 accountId: 'abc',
                 balance: 'bar'
             });
@@ -79,7 +80,7 @@ describe("Bank Account behavior when creating an account with invalid properties
     });
     it("should throw an exception if locked value provided is not true/false", function () {
         expect(function() {
-            bankAccount = new BankAccount({
+            bankAccount = BankAccountFactory.create({
                 accountId: 'abc',
                 locked: 'foo'
             });
@@ -88,7 +89,7 @@ describe("Bank Account behavior when creating an account with invalid properties
 
 });
 describe("When depositing into Bank Account", function () {
-    var account = new BankAccount({ accountId: 'abc'});
+    var account = BankAccountFactory.create({ accountId: 'abc'});
 
     it("should have a balance equal to what was initially deposited ",function(){
         account.deposit(1000);
@@ -114,7 +115,7 @@ describe("When depositing into Bank Account", function () {
 });
 
 describe("When withdrawing from Bank Account ", function () {
-    var account = new BankAccount({ accountId: 'abc', balance: 500});
+    var account = BankAccountFactory.create({ accountId: 'abc', balance: 500});
 
     it("should throw an exception when value withdrawn in not a number", function () {
         expect(function () {
@@ -126,7 +127,7 @@ describe("When withdrawing from Bank Account ", function () {
             account.withdraw(-1);
         }).toThrow();
     });
-    it("should result in $1 charge when balance less than $1000", function () {
+    it("should result in $1 charge when balance falls below $1000", function () {
         var initialBalance = account.balance();
         account.withdraw(10);
         expect(account.balance()).toEqual(initialBalance-10-1);
